@@ -42,4 +42,26 @@
   wget https://ibdmdb.org/tunnel/static/HMP2/WGS/1818/HSM7CYYD.tar
   wget https://ibdmdb.org/tunnel/static/HMP2/WGS/1818/HSM7CYY9.tar
   wget https://ibdmdb.org/tunnel/static/HMP2/WGS/1818/HSM7CYYB.tar
-  
+
+###### Notes on using Farm ######
+## When you log in with ssh, you log in to the head node
+## The head node is connected to a scheduler, which is connected to more computers (nodes)
+## To get from the head node to other nodes, run:
+## 1. screen
+## 2. srun
+## srun can be run with:
+## 1. node priority 
+## .bmh ('high' do not use this node, you will boot people off, use if 72 hr, 16 gb, 4 cpu, anymore than this and you can't use this node)
+## .bmm ('mid')
+## specify node priority with -p
+## specify cpu usage -c
+## specify time -t
+## format for time: 72:00:00 (72 hours)
+## specify memory usage --mem
+## specify the language --pty
+## name the session -J
+## show jobs that are running
+  squeue -u username
+## example 
+## once in the node, they run your stuff
+  srun -p bmh -J tmp -t 1:00:00 --mem=2000 --pty bash
