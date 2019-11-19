@@ -6,4 +6,6 @@
   for file in ~/F19_diblab_rotation/inputs/raw/HSM*
     do 
     tar xvf ${file} -C F19_diblab_rotation/inputs/ 
-  don
+  done
+  ## .tar, .tar.gz, .zip, .gz
+  ## do not unzip .gz files, most programs can run using this format
