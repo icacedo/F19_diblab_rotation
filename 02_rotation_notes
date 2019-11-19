@@ -7,5 +7,10 @@
     do 
     tar xvf ${file} -C F19_diblab_rotation/inputs/ 
   done
-  ## .tar, .tar.gz, .zip, .gz
-  ## do not unzip .gz files, most programs can run using this format
+## different kinds of file compression: .tar, .tar.gz, .zip, .gz
+## for .gz
+  gunzip
+## do not unzip fastq.gz files, most programs can run using this format
+## for .zip
+  unzip
+## pull requests are a way for other people to edit your code without changing it, unless you accept the edits
