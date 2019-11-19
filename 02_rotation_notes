@@ -1,0 +1,6 @@
+## November 19, 2019
+## 12 .tar files downloaded to raw/
+## need to unzip these files
+## extract files to inputs/
+  screen
+  for file in '~/F19_diblab_rotation/inputs/raw/HSM*'; do tar -C F19_diblab_rotation/inputs/ -xvf $file
