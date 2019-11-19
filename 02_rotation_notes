@@ -4,7 +4,7 @@
 ## extract files to inputs/
   screen
   for file in ~/F19_diblab_rotation/inputs/raw/HSM*
-    do 
+  do 
     tar xvf ${file} -C F19_diblab_rotation/inputs/ 
   done
 ## different kinds of file compression: .tar, .tar.gz, .zip, .gz
