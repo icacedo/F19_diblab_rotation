@@ -29,4 +29,7 @@
           base=$(basename "$file" .fastq.gz)
           zcat $file | head -4000000 | gzip > ~/F19_diblab_rotation/test_reads/$base.F1m.fastq.gz
   done
-## 
+## random subsetting of paired end reads
+## can be done in bash, see: http://www.sixthresearcher.com/list-of-helpful-linux-commands-to-process-fastq-files-from-ngs-experiments/
+## other programs that may be able to do this: BBmerge (reformat.sh), seqtk, seqIO
+## Using BBmerge reformat.sh
