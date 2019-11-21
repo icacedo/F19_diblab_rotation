@@ -14,3 +14,19 @@
 ## for .zip
   unzip
 ## pull requests are a way for other people to edit your code without changing it, unless you accept the edits
+################################################################################################################################
+## November 21, 2019
+## created new directory under F19_diblab_rotation/ called test_reads/ to put subsetted data into for testing
+## made subset.sh to create fastq.gz files for each sample that contains only 1000000 reads
+## used some of this code: http://www.sixthresearcher.com/list-of-helpful-linux-commands-to-process-fastq-files-from-ngs-experiments/
+  #!/bin/bash
+
+  # this script will extract the first 1000000 reads from each .fastq.gz file in inputs/
+  for file in ~/F19_diblab_rotation/inputs/HSM*
+  do
+          # one read with header, sequence, qc score takes up 4 lines
+          # 4000000/4=1000000
+          base=$(basename "$file" .fastq.gz)
+          zcat $file | head -4000000 | gzip > ~/F19_diblab_rotation/test_reads/$base.F1m.fastq.gz
+  done
+## 
