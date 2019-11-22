@@ -63,5 +63,8 @@
   conda list
 ## check location of a package (i.e. plass)
   which plass
-## for random subsampling, use khmer
-## create new directory within test_reads/ called random/
+## for random subsampling, use khmer: https://anaconda.org/bioconda/khmer
+## use this script specifically (view on github): khmer/scripts/sample-reads-randomly.py
+## created new directory within test_reads/ called random/
+## install khmer in F19_diblab_rotation (~/)
+  conda install -c bioconda khmer
