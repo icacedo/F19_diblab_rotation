@@ -15,6 +15,7 @@
   unzip
 ## pull requests are a way for other people to edit your code without changing it, unless you accept the edits
 ################################################################################################################################
+## need to source .bashrc before setting environment everytime you log in
 ## November 21, 2019
 ## created new directory under F19_diblab_rotation/ called test_reads/ to put subsetted data into for testing
 ## made subset.sh to create fastq.gz files for each sample that contains only 1000000 reads
@@ -27,9 +28,40 @@
           # one read with header, sequence, qc score takes up 4 lines
           # 4000000/4=1000000
           base=$(basename "$file" .fastq.gz)
+          # F1mil stands for first 1 million reads
           zcat $file | head -4000000 | gzip > ~/F19_diblab_rotation/test_reads/$base.F1m.fastq.gz
   done
 ## random subsetting of paired end reads
 ## can be done in bash, see: http://www.sixthresearcher.com/list-of-helpful-linux-commands-to-process-fastq-files-from-ngs-experiments/
 ## other programs that may be able to do this: BBmerge (reformat.sh), seqtk, seqIO
-## Using BBmerge reformat.sh
+## use reformat.sh to randomly subsample 1000000 read
+## install BBMap
+  curl -O https://astuteinternet.dl.sourceforge.net/project/bbmap/BBMap_38.73.tar.gz
+  tar -xvzf BBMap_38.73.tar.gz
+## created file subset_random.sh
+   
+  #!/bin/bash
+
+  outpath=~/F19_diblab_rotation/test_reads
+
+  for file in ~/F19_diblab_rotation/inputs/HSM*R1*
+  do
+          infile1=$file
+          infile2=`echo $infile1 | awk -F"R1" '{print $1 "R2" $2}'`
+          outfile1=$(basename "$infile1" .fastq.gz)
+          outfile2=$(basename "$infile2" .fastq.gz)
+
+          ~/bbmap/reformat.sh in1=$infile1 in2=$infile2 out1=$outpath/$outfile1.sampled.fasta.gz out2=$outpath/$outfile2.sampled.fasta.gz samplereadstarget=1000000
+  done
+## it doesn't look like bbmap kept the quality scores? looks reformated a bit?
+## in the future, install things into your environment using conda (even BBMap)
+## check the conda repository for conda installable packages
+## install plass in the rotation environment
+  conda activate F19_diblab_rotation
+  conda install -c bioconda plass
+## check to see what packages are installed
+  conda list
+## check location of a package (i.e. plass)
+  which plass
+## for random subsampling, use khmer
+## create new directory within test_reads/ called random/
