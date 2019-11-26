@@ -4,3 +4,4 @@
 ## created new directory within test_reads/ called random/
 ## install khmer in F19_diblab_rotation (~/)
   conda install -c bioconda khmer
+## run khmer to subset data randomly
