@@ -7,7 +7,7 @@
 ## installed miniconda on farm
   curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
   md5sum Miniconda3-latest-Linux-x86_64.sh
-  bash Miniconda3-latest-MacOSX-x86_64.sh
+  bash Miniconda3-latest-Linux-x86_64.sh
   source .bashrc
   conda create -n F19_diblab_rotation
   conda activate F19_diblab_rotation
