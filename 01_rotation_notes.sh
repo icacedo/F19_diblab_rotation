@@ -5,7 +5,7 @@
 ## log in and provide your private key
   ssh -i ~/path_to_keyfile icacedo@farm.cse.ucdavis.edu
 ## installed miniconda on farm
-  curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh
+  curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
   md5sum Miniconda3-latest-Linux-x86_64.sh
   bash Miniconda3-latest-MacOSX-x86_64.sh
   source .bashrc
