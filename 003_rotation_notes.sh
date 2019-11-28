@@ -18,7 +18,13 @@
 ## cancel all jobs
   scancel -u username
 ## created new script to run khmer
+  #!/bin/bash
 
+  for file in ~/F19_diblab_rotation/inputs/HSM*
+  do
+        base=$(basename "$file" .fastq.gz)
+        sample-reads-randomly.py -N 1000000 -o ~/F19_diblab_rotation/test_reads/random/$base.random_1mil.fastq.gz $file
+  done
 ## how do I quit and resume slurm? terminate running tasks?
 ## I don't think screen takes me to another node?
   
