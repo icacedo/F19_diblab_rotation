@@ -10,4 +10,15 @@
   conda remove -c conda-forge jupyter
 ## it probably won't work because i'm on farm, and i'm trying to open the notebook on my desktop
 ###########################################################################################################################
-## November 26, 2019
+## November 27, 2019
+## running khmer in the bmm node
+  srun -p bmh -J tmp -t 1:00:00 --mem=2000 --pty bash
+## check for running jobs
+  squeue -u username
+## cancel all jobs
+  scancel -u username
+## created new script to run khmer
+
+## how do I quit and resume slurm? terminate running tasks?
+## I don't think screen takes me to another node?
+  
