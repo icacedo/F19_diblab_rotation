@@ -23,8 +23,12 @@
   for file in ~/F19_diblab_rotation/inputs/HSM*
   do
         base=$(basename "$file" .fastq.gz)
-        sample-reads-randomly.py -N 1000000 -o ~/F19_diblab_rotation/test_reads/random/$base.random_1mil.fastq.gz $file
+        sample-reads-randomly.py -N 1000000 -o ~/F19_diblab_rotation/test_reads/random/$base.random_1mil.fastq.gz --gzip $file
   done
-## how do I quit and resume slurm? terminate running tasks?
-## I don't think screen takes me to another node?
+## run an srun session within a screen
+  screen 
+  srun -p bmm -J tmp -t 72:00:00 --mem=2000 --pty bash
+  ./F19_diblab_rotation/scripts/run_khmer.sh
+
+
   
