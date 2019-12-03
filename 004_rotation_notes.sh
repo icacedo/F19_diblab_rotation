@@ -1,5 +1,5 @@
 ## December 3, 2019
-## HMMER
+## stuff for HMMMER
 ## scripts adapted from taylor's snakemake code
 ## convert everything into bash
 ## remove stops (*) from plass .fas sequences
@@ -11,22 +11,31 @@
 ## put remove-stop-plass.py in a script under ~/F19_diblab_rotation/scripts/hmm_scripts/nostop.sh 
   #!/bin/bash
   path=~/F19_diblab_rotation
-    for file in $path/plass_assembly/*.assembly.fas
-    do
-            $path/scripts/remove-stop-plass.py $file
-            mv $path/plass_assembly/*nostop* $path/hmm/nostop_fas_files/
-    done
+  for file in $path/plass_assembly/*.assembly.fas
+  do
+          $path/scripts/remove-stop-plass.py $file
+          mv $path/plass_assembly/*nostop* $path/hmm/nostop_fas_files/
+  done
 ## remove redundant sequences with cd-hit
 ## ~/F19_diblab_rotation/scripts/hmm_scripts/cdhit.sh
   #!/bin/bash
   path=~/F19_diblab_rotation/hmm
   for file in $path/nostop_fas_files/*
-    do
-            base="$(basename $file .assembly.fas.nostop.fa)"
-            cd-hit -c 1 -i $file -o $path/cdhit_fas_files/$base.plass.cdhit.fa
-    done
-
-
+  do
+          base="$(basename $file .assembly.fas.nostop.fa)"
+          cd-hit -c 1 -i $file -o $path/cdhit_fas_files/$base.plass.cdhit.fa
+  done
+## rename plass headers to make them all unique in hmmm_scripts/rename_headers.sh
+  #!/bin/bash
+  for file in ~/F19_diblab_rotation/hmm/cdhit_fas_files/*.fa
+  do
+          base="$(basename $file .plass.cdhit.fa)"
+          # cut out string after first space in header
+          cut -d ' ' -f1 $file > tmp.fa
+          # add (_1, _2, _n) to duplicate headers
+          awk '(/^>/ && s[$0]++){{$0=$0"_"s[$0]}}1;' tmp.fa > ~/F19_diblab_rotation/hmm/clean_fas_files/$base.plass.nostop.cdhit.uniq_headers.fa
+          rm tmp.fa
+  done
 
 
 
