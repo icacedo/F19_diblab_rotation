@@ -36,7 +36,22 @@
           awk '(/^>/ && s[$0]++){{$0=$0"_"s[$0]}}1;' tmp.fa > ~/F19_diblab_rotation/hmm/clean_fas_files/$base.plass.nostop.cdhit.uniq_headers.fa
           rm tmp.fa
   done
-
+## build HMM profile
+## reference page 20: http://eddylab.org/software/hmmer3/3.1b2/Userguide.pdf
+## download alignments in Stockholm format to hmm/alignments/
+## options for curl: https://curl.haxx.se/docs/manpage.html#-O
+  # log out and log into the transfer node
+  ssh -p 2022 -i ssh/2019-11-15-farm icacedo@farm.cse.ucdavis.edu
+  screen
+  curl -o PF00583.sto https://pfam.xfam.org/family/PF00583/alignment/full
+  curl -o PF00144.sto https://pfam.xfam.org/family/PF00144/alignment/full
+  curl -o PF00893.sto https://pfam.xfam.org/family/PF00893/alignment/full
+## hmmbuild.sh
+  hmmbuild .hmm .sto
+## hmmpress.sh
+  hmmpress .hmm
+  hmmscan db.hmm input.fa
+## using  nested for loop
 
 
 
