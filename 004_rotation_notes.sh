@@ -46,14 +46,26 @@
   curl -o PF00583.sto https://pfam.xfam.org/family/PF00583/alignment/full
   curl -o PF00144.sto https://pfam.xfam.org/family/PF00144/alignment/full
   curl -o PF00893.sto https://pfam.xfam.org/family/PF00893/alignment/full
-## hmmbuild.sh
-  hmmbuild .hmm .sto
-## hmmpress.sh
-  hmmpress .hmm
-  hmmscan db.hmm input.fa
-## using  nested for loop
-
-
-
-
-## pfam accesion numbers: PF00583.19, PF00144.19, PF00893.14
+## run hmmbuild and hmmpress in same script: scripts/hmm_scripts/build_press.sh
+  #!/bin/bash
+  path=~/F19_diblab_rotation/hmm
+  for file in $path/alignments/*sto
+  do
+          base=$(basename $file .sto)
+          hmmbuild $path/build_press/$base.hmm $file
+          hmmpress $path/build_press/$base.hmm
+  done
+## script for hmmscan: scripts/hmm_scripts/scan.sh
+  #!/bin/bash
+  path=~/F19_diblab_rotation/hmm
+  for i in $path/build_press/*.hmm
+  do
+          for j in $path/clean_fas_files/*.fa
+          do
+                  base1=$(basename $i .hmm)
+                  base2=$(basename $j .plass.nostop.cdhit.uniq_headers.fa)
+                  hmmscan -T 100 -o $path/scanned/"$base1"_"$base2".out --tblout $path/scanned/"$base1"_"$base2".tbl --domtblout $path/scanned/"$base1"_"$base2".dom $i $j        done
+  done
+## the pfam accesion numbers did not get anything with the million read subsetted files: PF00583.19, PF00144.19, PF00893.14
+## try new families for tetracycline ribosomal protection proteins, rRNA methyltransferases
+  for i in PF00583 PF00144 PF00893 PF00679 PF14492 PF03764 PF00009 PF07091 PF00398; do curl -o $i.sto https://pfam.xfam.org/family/$i/alignment/full; done
