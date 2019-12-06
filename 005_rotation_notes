@@ -1,0 +1,18 @@
+## Dec 6, 2019
+## gound one hit in the subsetted data
+## PF00009_HSM7CYYB_1mil.dom:GTP_EFTU
+## i updated all the scripts that i ran for hmm stuff to use _1mil folders
+## now moving on to paladin
+## find the read from the sample that the hmmscan found, and get that sequence from the plass assembly file (the cleaned one)
+## CAU6DANXX170407:1:1101:7046:70570/_2
+  grep -A 1 'CAU6DANXX170407:1:1101:7046:70570/_2' HSM7CYYB_1mil.plass.nostop.cdhit.uniq_headers.fa
+  # output:
+  >CAU6DANXX170407:1:1101:7046:70570/_2
+  MARTTPIARYRNIGISAHIDAGKTTTTERILFYTGVNHKIGEVHDGAATMDWMEQEQERGITITSAATTAFWSGMAKQYEPHRINIIDTPGHVDF
+## save to a new fasta file
+   grep -A 1 'CAU6DANXX170407:1:1101:7046:70570/_2' HSM7CYYB_1mil.plass.nostop.cdhit.uniq_headers.fa > HSM7CYYB_CAU6DANXX170407:1:1101:7046:70570_2.fasta
+## move file to paladin/
+   mv HSM7CYYB_CAU6DANXX170407\:1\:1101\:7046\:70570_2.fasta ~/F19_diblab_rotation/paladin
+## since it's just one sequence, can align all reads from sample
+## download paladin
+  conda install -c bioconda paladin
