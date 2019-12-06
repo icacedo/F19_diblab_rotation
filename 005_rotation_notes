@@ -14,5 +14,9 @@
 ## move file to paladin/
    mv HSM7CYYB_CAU6DANXX170407\:1\:1101\:7046\:70570_2.fasta ~/F19_diblab_rotation/paladin
 ## since it's just one sequence, can align all reads from sample
-## download paladin
+## download paladin in F19_diblab_rotation environment
   conda install -c bioconda paladin
+
+https://github.com/ToniWestbrook/paladin/blob/master/README.md
+when using paladin align, it adds a .pro to the first input
+running in a screen
