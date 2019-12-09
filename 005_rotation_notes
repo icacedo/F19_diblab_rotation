@@ -16,7 +16,40 @@
 ## since it's just one sequence, can align all reads from sample
 ## download paladin in F19_diblab_rotation environment
   conda install -c bioconda paladin
-
-https://github.com/ToniWestbrook/paladin/blob/master/README.md
-when using paladin align, it adds a .pro to the first input
-running in a screen
+## https://github.com/ToniWestbrook/paladin/blob/master/README.md
+## when using paladin align, it adds a .pro to the first input
+## running in a screen
+## paladin/paladin.sh; has paladin index and align
+  #!/bin/bash
+  path=~/F19_diblab_rotation/paladin
+  file=~/F19_diblab_rotation/paladin/HSM7CYYB_CAU6DANXX170407:1:1101:7046:70570_2.fasta
+  #paladin index -r3 $file
+  for reads in ~/F19_diblab_rotation/inputs/*.fastq.gz
+  do
+          base=$(basename $reads .fastq.gz)
+          paladin align -f 125 -t 2 $file $reads > $path/paladin_align/$base
+  done
+## make new directory for samtools output: ~/F19_diblab_rotation/paladin/samtools
+## samtools.sh
+  #!/bin/bash
+  path=~/F19_diblab_rotation/paladin
+  for file in $path/paladin_align/*.trim.sam
+  do
+          base=$(basename .trim.sam)
+          samtools flagstat $file > $path/samtools/$base.trim.sam.flagstat
+  done
+  for file in $path/samtools/*.trim.sam.flagstat
+  do
+          base=$(basename .trim.sam.flagstat)
+          samtools view $file > $path/samtools/$base.trim.bam
+  done
+  for file in $path/samtools/*.trim.bam
+  do
+          base=$(basename .trim.bam)
+          samtools sort $file > $path/samtools/$base.trim.sort.bam
+  done
+  for file in $path/samtools/*.trim.sort.bam
+  do
+          base=$(basename .trim.sort.bam)
+          samtools index $file > $path/samtools/$base.trim.sort.bam.bai
+  done
