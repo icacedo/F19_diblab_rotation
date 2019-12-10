@@ -38,9 +38,9 @@
           base=$(basename $file .trim.sam)
           samtools flagstat $file > $path/samtools/$base.trim.sam.flagstat
   done
-  for file in $path/samtools/*.trim.sam.flagstat
+  for file in $path/paladin_align/*.trim.sam
   do
-          base=$(basename $file .trim.sam.flagstat)
+          base=$(basename $file .trim.sam)
           samtools view $file > $path/samtools/$base.trim.bam
   done
   for file in $path/samtools/*.trim.bam
@@ -51,7 +51,7 @@
   for file in $path/samtools/*.trim.sort.bam
   do
           base=$(basename $file .trim.sort.bam)
-          samtools index $file > $path/samtools/$base.trim.sort.bam.bai
+          samtools index $file
   done
 ## needed to install samtools
   conda install -c bioconda samtools
