@@ -94,5 +94,7 @@
           base=$(basename $file .st.fastq)
           grep -e "@" $file > $path/mapped_reads_lists/$base.list.txt
   done
+## install bbmap
+  conda install -c bioconda bbmap
 ## get sequences that were mapped with paladin/get_nuc_seq.sh
   
