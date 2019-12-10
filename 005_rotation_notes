@@ -29,6 +29,7 @@
           base=$(basename $reads .fastq.gz)
           paladin align -f 125 -t 2 $file $reads > $path/paladin_align/$base
   done
+## December 9, 2019
 ## make new directory for samtools output: ~/F19_diblab_rotation/paladin/samtools
 ## samtools.sh
   #!/bin/bash
@@ -55,3 +56,43 @@
   done
 ## needed to install samtools
   conda install -c bioconda samtools
+## December 10, 2019
+## made new directories in paladin/ for samtools outputs
+  mkdir st_flagstat/
+  mkdir st_view/
+  mkdir st_sort/
+  mkdir st_index/
+## edited samtools.sh 
+## explanation on the paladin/samtools steps
+## 1. Paladin index marks amino acid sequences of interest for quickly referencing it later (makes a .bwt file)
+## 2. Paladin align used the index to align the amino acid sequence to the original reads (makes a .sam file)
+## the .sam file has mapping information
+## samtools works with .sam files
+## 3. Samtools Flagstat gets statistics on .sam files, like number of mapped reads
+## convert to .bam file to compress the .sam, then sort and index the .sam file
+## 4. Samtools Fastq extracts reads that mapped with -F 4, can skip the sort and index 
+## reference: data carpentry genomics, wrangling genomics lesson 3 or 4 that can explain all the file formats
+## need to get the original reads (nucleotides) from the extracted mapped amino acid sequences using the read name (headers)
+## use samtools fastq
+## made new directory
+  mkdir st_fastq/
+## add this to samtools.sh, and just inactivated the other programs
+  for file in $path/paladin_align/*.trim.sam
+  do
+          base=$(basename $file .trim.sam)
+          samtools fastq -0 $path/st_fastq/$base.st.fastq -F 4 $file
+  done
+## directory for list of headers to be used for bbmap filterbyname.sh
+  mkdir mapped_reads_lists
+## directory for nucleotide sequences that were mapped by paladin (extracted with filterbyname.sh)
+  mkdir mapped_reads/
+## get list of headers with paladin/get_lists.sh
+  #!/bin/bash
+  path=~/F19_diblab_rotation/paladin
+  for file in $path/st_fastq/*.st.fastq
+  do
+          base=$(basename $file .st.fastq)
+          grep -e "@" $file > $path/mapped_reads_lists/$base.list.txt
+  done
+## get sequences that were mapped with paladin/get_nuc_seq.sh
+  
