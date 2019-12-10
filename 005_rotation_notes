@@ -53,3 +53,5 @@
           base=$(basename .trim.sort.bam)
           samtools index $file > $path/samtools/$base.trim.sort.bam.bai
   done
+## needed to install samtools
+  conda install -c bioconda samtools
