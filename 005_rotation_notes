@@ -35,22 +35,22 @@
   path=~/F19_diblab_rotation/paladin
   for file in $path/paladin_align/*.trim.sam
   do
-          base=$(basename .trim.sam)
+          base=$(basename $file .trim.sam)
           samtools flagstat $file > $path/samtools/$base.trim.sam.flagstat
   done
   for file in $path/samtools/*.trim.sam.flagstat
   do
-          base=$(basename .trim.sam.flagstat)
+          base=$(basename $file .trim.sam.flagstat)
           samtools view $file > $path/samtools/$base.trim.bam
   done
   for file in $path/samtools/*.trim.bam
   do
-          base=$(basename .trim.bam)
+          base=$(basename $file .trim.bam)
           samtools sort $file > $path/samtools/$base.trim.sort.bam
   done
   for file in $path/samtools/*.trim.sort.bam
   do
-          base=$(basename .trim.sort.bam)
+          base=$(basename $file .trim.sort.bam)
           samtools index $file > $path/samtools/$base.trim.sort.bam.bai
   done
 ## needed to install samtools
